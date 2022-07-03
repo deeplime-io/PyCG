@@ -184,11 +184,11 @@ class CallGraphGenerator(object):
     def output(self):
         return self.cg.get()
 
+    def output_enriched(self):
+        return self.cg.get_enriched()
+
     def output_key_errs(self):
         return self.key_errs.get()
-
-    def output_edges(self):
-        return self.key_errors
 
     def output_edges(self):
         return self.cg.get_edges()

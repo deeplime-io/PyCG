@@ -20,6 +20,7 @@
 #
 import os
 import ast
+import astunparse
 
 from pycg import utils
 from pycg.processing.base import ProcessingBase
@@ -113,11 +114,12 @@ class CallGraphProcessor(ProcessingBase):
         super().visit_FunctionDef(node)
 
     def visit_Call(self, node):
-        def create_ext_edge(name, ext_modname):
+        def create_ext_edge(name, ext_modname, code):
             self.add_ext_mod_node(name)
             self.call_graph.add_node(name, ext_modname)
-            self.call_graph.add_edge(self.current_method, name)
+            self.call_graph.add_edge(self.current_method, name, code)
 
+        code = astunparse.unparse(node)
         # First visit the child function so that on the case of
         #       func()()()
         # we first visit the call to func and then the other calls
@@ -136,10 +138,10 @@ class CallGraphProcessor(ProcessingBase):
                 # i.e. import os; lala = os.path; lala.dirname()
                 for name in self.get_full_attr_names(node.func):
                     ext_modname = name.split(".")[0]
-                    create_ext_edge(name, ext_modname)
+                    create_ext_edge(name, ext_modname, code)
             elif getattr(node.func, "id", None) and self.is_builtin(node.func.id):
                 name = utils.join_ns(utils.constants.BUILTIN_NAME, node.func.id)
-                create_ext_edge(name, utils.constants.BUILTIN_NAME)
+                create_ext_edge(name, utils.constants.BUILTIN_NAME, code)
             return
 
         self.last_called_names = names
@@ -150,9 +152,9 @@ class CallGraphProcessor(ProcessingBase):
             if pointer_def.is_callable():
                 if pointer_def.get_type() == utils.constants.EXT_DEF:
                     ext_modname = pointer.split(".")[0]
-                    create_ext_edge(pointer, ext_modname)
+                    create_ext_edge(pointer, ext_modname, code)
                     continue
-                self.call_graph.add_edge(self.current_method, pointer)
+                self.call_graph.add_edge(self.current_method, pointer, code)
 
                 # TODO: This doesn't work and leads to calls from the decorators
                 #    themselves to the function, creating edges to the first decorator
@@ -166,7 +168,7 @@ class CallGraphProcessor(ProcessingBase):
                 init_ns = self.find_cls_fun_ns(pointer, utils.constants.CLS_INIT)
 
                 for ns in init_ns:
-                    self.call_graph.add_edge(self.current_method, ns)
+                    self.call_graph.add_edge(self.current_method, ns, code)
 
     def analyze_submodules(self):
         super().analyze_submodules(CallGraphProcessor, self.import_manager,

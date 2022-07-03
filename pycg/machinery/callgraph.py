@@ -22,6 +22,7 @@ class CallGraph(object):
     def __init__(self):
         self.cg = {}
         self.modnames = {}
+        self.cg_enriched = {}
 
     def add_node(self, name, modname=""):
         if not isinstance(name, str):
@@ -36,13 +37,22 @@ class CallGraph(object):
         if name in self.cg and not self.modnames[name]:
             self.modnames[name] = modname
 
-    def add_edge(self, src, dest):
+    def add_edge(self, src, dest, code=None):
         self.add_node(src)
         self.add_node(dest)
         self.cg[src].add(dest)
+        if code is not None:
+            if src in self.cg_enriched:
+                self.cg_enriched[src].append({"normed": dest, "code": code.strip()})
+            else:
+                self.cg_enriched[src] = [{"normed": dest, "code": code.strip()}]
+
 
     def get(self):
         return self.cg
+
+    def get_enriched(self):
+        return self.cg_enriched
 
     def get_edges(self):
         output = []
