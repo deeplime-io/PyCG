@@ -31,12 +31,12 @@ def get_long_desc():
 
 def setup_package():
     setup(
-        name='pycg',
-        version='0.0.6',
+        name='onecode-pycg',
+        version='0.0.7',
         description='Practical Python Call Graphs',
         long_description=get_long_desc(),
         long_description_content_type="text/markdown",
-        url='https://github.com/vitsalis/pycg',
+        url='https://github.com/deeplime-io/pycg',
         license='Apache Software License',
         packages=find_packages(),
         install_requires=[],

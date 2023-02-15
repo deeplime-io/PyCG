@@ -1,3 +1,12 @@
+# :warning: Notes
+Forked from https://github.com/vitsalis/pycg
+
+Changes: See https://github.com/deeplime-io/PyCG/tree/onecode
+
+Essentially added code tracks the order of the calls and the code associated to it. It is used by OneCode to properly interpret code based on the **excellent** `PyCG`.
+
+Why a new PyPi package? Well, the not-so-great PyPi doesn't allow to have forked public repositories as part of the dependencies. Nice right?
+
 # PyCG - Practical Python Call Graphs
 
 PyCG generates call graphs for Python code using static analysis.
