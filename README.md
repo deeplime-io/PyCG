@@ -33,7 +33,7 @@ In _43rd International Conference on Software Engineering, ICSE '21_,
 PyCG is implemented in Python3 and requires Python version 3.4 or higher.
 It also has no dependencies. Simply:
 ```
-pip install pycg
+pip install onecode-pycg
 ```
 
 # Usage
