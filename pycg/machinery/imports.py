@@ -18,20 +18,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-import sys
-import ast
-import os
-import importlib
 import copy
+import importlib
+import os
+import sys
+from importlib import abc
 
 from pycg import utils
+
 
 def get_custom_loader(ig_obj):
     """
     Closure which returns a custom loader
     that modifies an ImportManager object
     """
-    class CustomLoader(importlib.abc.SourceLoader):
+
+    class CustomLoader(abc.SourceLoader):
         def __init__(self, fullname, path):
             self.fullname = fullname
             self.path = path
@@ -48,6 +50,7 @@ def get_custom_loader(ig_obj):
             return ""
 
     return CustomLoader
+
 
 class ImportManager(object):
     def __init__(self):
@@ -88,7 +91,6 @@ class ImportManager(object):
 
         node["imports"].add(dest)
 
-
     def _clear_caches(self):
         importlib.invalidate_caches()
         sys.path_importer_cache.clear()
@@ -119,10 +121,9 @@ class ImportManager(object):
         node["filename"] = os.path.abspath(filename)
 
     def get_imports(self, modname):
-        if not modname in self.import_graph:
+        if modname not in self.import_graph:
             return []
         return self.import_graph[modname]["imports"]
-
 
     def _is_init_file(self):
         return self.input_file.endswith("__init__.py")
@@ -134,8 +135,10 @@ class ImportManager(object):
             raise ImportError("Attempting import beyond top level package")
 
         mod_name = ("." * level) + name
-        # When an __init__ file is analyzed, then the module name doesn't contain
-        # the __init__ part in it, so special care must be taken for levels.
+        # When an __init__ file is analyzed,
+        # then the module name doesn't contain
+        # the __init__ part in it,
+        # so special care must be taken for levels.
         if self._is_init_file() and level >= 1:
             if level != 1:
                 level -= 1
@@ -150,7 +153,11 @@ class ImportManager(object):
             self.create_edge(mod_name)
             return sys.modules[mod_name]
 
-        module_spec = importlib.util.find_spec(mod_name, package=package)
+        try:
+            module_spec = importlib.util.find_spec(mod_name, package=package)
+        except ModuleNotFoundError:
+            module_spec = None
+
         if module_spec is None:
             return importlib.import_module(mod_name, package=package)
 
@@ -173,17 +180,19 @@ class ImportManager(object):
 
         parent = ".".join(mod_name.split(".")[:-1])
         parent_name = ".".join(name.split(".")[:-1])
-        combos = [(mod_name, package),
-                (parent, package),
-                (utils.join_ns(package, name), ""),
-                (utils.join_ns(package, parent_name), "")]
+        combos = [
+            (mod_name, package),
+            (parent, package),
+            (utils.join_ns(package, name), ""),
+            (utils.join_ns(package, parent_name), ""),
+        ]
 
         mod = None
         for mn, pkg in combos:
             try:
                 mod = self._do_import(mn, pkg)
                 break
-            except:
+            except Exception:
                 continue
 
         if not mod:
@@ -197,8 +206,7 @@ class ImportManager(object):
         if fname.endswith("__init__.py"):
             fname = os.path.split(fname)[0]
 
-        return utils.to_mod_name(
-            os.path.relpath(fname, self.mod_dir))
+        return utils.to_mod_name(os.path.relpath(fname, self.mod_dir))
 
     def get_import_graph(self):
         return self.import_graph
@@ -209,7 +217,9 @@ class ImportManager(object):
         self.old_path = copy.deepcopy(sys.path)
 
         loader_details = loader, importlib.machinery.all_suffixes()
-        sys.path_hooks.insert(0, importlib.machinery.FileFinder.path_hook(loader_details))
+        sys.path_hooks.insert(
+            0, importlib.machinery.FileFinder.path_hook(loader_details)
+        )
         sys.path.insert(0, os.path.abspath(self.mod_dir))
 
         self._clear_caches()
@@ -219,6 +229,7 @@ class ImportManager(object):
         sys.path = self.old_path
 
         self._clear_caches()
+
 
 class ImportManagerError(Exception):
     pass

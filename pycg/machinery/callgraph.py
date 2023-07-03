@@ -30,7 +30,7 @@ class CallGraph(object):
         if not name:
             raise CallGraphError("Empty node name")
 
-        if not name in self.cg:
+        if name not in self.cg:
             self.cg[name] = set()
             self.modnames[name] = modname
 
@@ -46,7 +46,6 @@ class CallGraph(object):
                 self.cg_enriched[src].append({"normed": dest, "code": code.strip()})
             else:
                 self.cg_enriched[src] = [{"normed": dest, "code": code.strip()}]
-
 
     def get(self):
         return self.cg
