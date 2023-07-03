@@ -47,7 +47,6 @@ class CallGraph(object):
             else:
                 self.cg_enriched[src] = [{"normed": dest, "code": code.strip()}]
 
-
     def get(self):
         return self.cg
 

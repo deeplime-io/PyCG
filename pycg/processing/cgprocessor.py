@@ -18,8 +18,9 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-import os
 import ast
+import os
+
 import astunparse
 
 from pycg import utils
