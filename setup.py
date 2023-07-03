@@ -23,11 +23,13 @@ import os
 from setuptools import setup, find_packages
 from subprocess import call
 
+
 def get_long_desc():
     with open("README.md", "r") as readme:
         desc = readme.read()
 
     return desc
+
 
 def setup_package():
     setup(
@@ -40,19 +42,20 @@ def setup_package():
         license='Apache Software License',
         packages=find_packages(),
         install_requires=[],
-        python_requires='>=3.4',
-        entry_points = {
-            'console_scripts': [
-                'pycg=pycg.__main__:main',
+        python_requires=">=3.4",
+        entry_points={
+            "console_scripts": [
+                "pycg=pycg.__main__:main",
             ],
         },
         classifiers=[
-            'License :: OSI Approved :: Apache Software License',
-            'Programming Language :: Python :: 3'
+            "License :: OSI Approved :: Apache Software License",
+            "Programming Language :: Python :: 3",
         ],
-        author = 'Vitalis Salis',
-        author_email = 'vitsalis@gmail.com'
+        author="Vitalis Salis",
+        author_email="vitsalis@gmail.com",
     )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     setup_package()
