@@ -1,6 +1,6 @@
 [project]
-name = "PyCG"
-version = "0.0.7"
+name = "onecode-pycg"
+version = "0.0.8"
 
 description = "PyCG - Practical Python Call Graphs"
 readme = "README.md"
