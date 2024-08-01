@@ -26,9 +26,12 @@ dev = ["flake8>=6.0.0", "isort>=5.12.0", "black>=22.12.0", "mock"]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["pycg"]
+
 [tool.black]
 line-length = 88
-target_version = ['py38', 'py39', 'py310']
+target_version = ['py38', 'py39', 'py310', 'py311', 'py312']
 preview = true
 exclude = '''
 /(
