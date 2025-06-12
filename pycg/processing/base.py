@@ -254,10 +254,10 @@ class ProcessingBase(ast.NodeVisitor):
                 if defi:
                     defis.append(defi)
             return defis
-        elif isinstance(node, ast.Num):
-            return [node.n]
-        elif isinstance(node, ast.Str):
-            return [node.s]
+        elif isinstance(node, ast.Constant):
+            return [node.value]
+        elif isinstance(node, ast.Constant):
+            return [node.value]
         elif self._is_literal(node):
             return [node]
         elif isinstance(node, ast.Dict):
