@@ -81,11 +81,10 @@ is represented as an entry of `dst` in the list assigned to key `src`:
 
 ## FASTEN Format
 
-Dropped - not useful for OneCode and requires porting or `pkg_resources`
+Dropped - not useful for OneCode and requires porting of `pkg_resources`
 
 For an up-to-date description of the FASTEN format refer to the
-[FASTEN
-wiki](https://github.com/fasten-project/fasten/wiki/Extended-Revision-Call-Graph-format#python).
+[FASTEN wiki](https://github.com/fasten-project/fasten/wiki/Extended-Revision-Call-Graph-format#python).
 
 # Key Errors Output
 
