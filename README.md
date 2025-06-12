@@ -9,8 +9,7 @@ Why a new PyPi package? Well, the not-so-great PyPi doesn't allow to have forked
 
 # PyCG - Practical Python Call Graphs
 
-[![Linters](https://github.com/vitsalis/PyCG/actions/workflows/linters.yml/badge.svg)](https://github.com/vitsalis/PyCG/actions/workflows/linters.yml)
-[![Tests](https://github.com/vitsalis/PyCG/actions/workflows/test.yaml/badge.svg)](https://github.com/vitsalis/PyCG/actions/workflows/test.yaml)
+[![Tests](https://github.com/deeplime-io/PyCG/actions/workflows/test.yaml/badge.svg)](https://github.com/vitsalis/PyCG/actions/workflows/test.yaml)
 
 PyCG generates call graphs for Python code using static analysis.
 It efficiently supports
