@@ -92,7 +92,7 @@ class ImportManager(object):
         node["imports"].add(dest)
 
     def _clear_caches(self):
-        importlib.invalidate_caches()
+        # importlib.invalidate_caches()
         sys.path_importer_cache.clear()
         # TODO: maybe not do that since it empties the whole cache
         for name in self.import_graph:
