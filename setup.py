@@ -34,7 +34,7 @@ def get_long_desc():
 def setup_package():
     setup(
         name="onecode-pycg",
-        version="0.0.9",
+        version="1.2.0",
         description="Practical Python Call Graphs",
         long_description=get_long_desc(),
         long_description_content_type="text/markdown",
