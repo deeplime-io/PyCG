@@ -44,7 +44,7 @@ pip install onecode-pycg
 
 ```
 ~ >>> pycg -h
-usage: __main__.py [-h] [--package PACKAGE] [--fasten] [--product PRODUCT]
+usage: __main__.py [-h] [--package PACKAGE] [--product PRODUCT]
                         [--forge FORGE] [--version VERSION] [--timestamp TIMESTAMP]
                         [--max-iter MAX_ITER] [--operation {call-graph,key-error}]
                         [--as-graph-output AS_GRAPH_OUTPUT] [-o OUTPUT]
@@ -56,12 +56,6 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   --package PACKAGE     Package containing the code to be analyzed
-  --fasten              Produce call graph using the FASTEN format
-  --product PRODUCT     Package name
-  --forge FORGE         Source the product was downloaded from
-  --version VERSION     Version of the product
-  --timestamp TIMESTAMP
-                        Timestamp of the package's version
   --max-iter MAX_ITER   Maximum number of iterations through source code. If not specified a fix-point iteration will be performed.
   --operation {call-graph,key-error}
                         Operation to perform. Choose call-graph for call graph generation (default) or key-error for key error detection on dictionaries.
@@ -70,14 +64,6 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         Output path
 ```
-
-The following command line arguments should used only when `--fasten` is
-provied:
-
-- `--product`: The name of the package.
-- `--forge`: Source the package was downloaded from.
-- `--version`: The version of the package.
-- `--timestamp` : The timestamp of the package's version.
 
 # Call Graph Output
 
@@ -95,6 +81,8 @@ is represented as an entry of `dst` in the list assigned to key `src`:
 ```
 
 ## FASTEN Format
+
+Dropped - not useful for OneCode and requires porting or `pkg_resources`
 
 For an up-to-date description of the FASTEN format refer to the
 [FASTEN
@@ -135,13 +123,6 @@ All the entry points are known and we want the simple JSON format
 All entry points are not known and we want the simple JSON format
 ```
 ~ >>> pycg --package django $(find django -type f -name "*.py") -o django.json
-```
-
-We want the FASTEN format:
-```
-~ >>> pycg --package pypi_pkg --fasten --product "pypipkg" --forge "PyPI" \
-        --version "0.1" --timestamp 42 \
-        pypi_pkg/module1.py pkg_root/subpackage/module2.py -o cg.json
 ```
 
 # Running Tests

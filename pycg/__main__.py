@@ -13,20 +13,6 @@ def main():
         "--package", help="Package containing the code to be analyzed", default=None
     )
     parser.add_argument(
-        "--fasten",
-        help="Produce call graph using the FASTEN format",
-        action="store_true",
-        default=False,
-    )
-    parser.add_argument("--product", help="Package name", default="")
-    parser.add_argument(
-        "--forge", help="Source the product was downloaded from", default=""
-    )
-    parser.add_argument("--version", help="Version of the product", default="")
-    parser.add_argument(
-        "--timestamp", help="Timestamp of the package's version", default=0
-    )
-    parser.add_argument(
         "--max-iter",
         type=int,
         help=(
@@ -62,12 +48,7 @@ def main():
     cg.analyze()
 
     if args.operation == CALL_GRAPH_OP:
-        if args.fasten:
-            formatter = formats.Fasten(
-                cg, args.package, args.product, args.forge, args.version, args.timestamp
-            )
-        else:
-            formatter = formats.Simple(cg)
+        formatter = formats.Simple(cg)
         output = formatter.generate()
     else:
         output = cg.output_key_errs()
