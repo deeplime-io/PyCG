@@ -21,8 +21,6 @@
 import ast
 import os
 
-import astunparse
-
 from pycg import utils
 from pycg.machinery.definitions import Definition
 from pycg.processing.base import ProcessingBase
@@ -131,7 +129,7 @@ class CallGraphProcessor(ProcessingBase):
             self.call_graph.add_node(name, ext_modname)
             self.call_graph.add_edge(self.current_method, name, code)
 
-        code = astunparse.unparse(node)
+        code = ast.unparse(node)
         # First visit the child function so that on the case of
         #       func()()()
         # we first visit the call to func and then the other calls
