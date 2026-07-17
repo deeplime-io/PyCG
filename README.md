@@ -9,7 +9,7 @@ Why a new PyPi package? Well, the not-so-great PyPi doesn't allow to have forked
 
 # PyCG - Practical Python Call Graphs
 
-[![Tests](https://github.com/deeplime-io/PyCG/actions/workflows/test.yaml/badge.svg)](https://github.com/vitsalis/PyCG/actions/workflows/test.yaml)
+[![Tests](https://github.com/deeplime-io/PyCG/actions/workflows/test.yaml/badge.svg)](https://github.com/deeplime-io/PyCG/actions/workflows/test.yaml)
 
 PyCG generates call graphs for Python code using static analysis.
 It efficiently supports
@@ -33,7 +33,7 @@ In _43rd International Conference on Software Engineering, ICSE '21_,
 
 # Installation
 
-PyCG is implemented in Python3 and requires Python version 3.4 or higher.
+PyCG is implemented in Python3 and requires Python 3.10–3.14.
 It also has no dependencies. Simply:
 ```
 pip install onecode-pycg
